@@ -3,6 +3,7 @@
    category breakdown. No data ever leaves the page. */
 
 const WORKBOOK_PATH = "./sample-budget.xlsx";
+const TEMPLATE_PATH = "./blank-template.xlsx";
 
 // Used only if the workbook can't be loaded (e.g. opening index.html directly
 // without a local server, or offline). Purely illustrative numbers.
@@ -464,6 +465,10 @@ document.getElementById("fileInput").addEventListener("change", async (event) =>
 
 document.getElementById("downloadBtn").addEventListener("click", () => {
   window.location.href = WORKBOOK_PATH;
+});
+
+document.getElementById("templateBtn").addEventListener("click", () => {
+  window.location.href = TEMPLATE_PATH;
 });
 
 loadLinkedWorkbook();
