@@ -13,3 +13,7 @@ Thumbs.db
 *.local.xlsx
 budget.xlsx
 my-budget.xlsx
+personal-budget.xlsx
+
+# Excel lock files (created while a workbook is open)
+~$*.xlsx
