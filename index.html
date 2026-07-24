@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f7f4ee" />
+  <title>Envelope — a calm budget dashboard</title>
+  <meta name="description" content="A calm, spreadsheet-powered budget dashboard. Reads directly from an Excel workbook in your browser — nothing is ever uploaded." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+
+    <header class="site-header">
+      <div class="titles">
+        <p class="eyebrow">Envelope · demo</p>
+        <h1>Envelope</h1>
+        <p class="lede">A calm, clear view of where your money goes.</p>
+      </div>
+      <div class="header-actions">
+        <label class="btn" for="fileInput">Open your workbook</label>
+        <input id="fileInput" type="file" accept=".xlsx,.xls" hidden />
+        <button class="btn" id="downloadBtn" type="button">Download sample</button>
+      </div>
+    </header>
+
+    <p class="status-line">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">Loading workbook…</span>
+    </p>
+
+    <p class="demo-note">
+      This is a live demo running on fictional sample data — no real finances here.
+      Click <strong>“Open your workbook”</strong> to try it with your own spreadsheet, privately, in your browser.
+    </p>
+
+    <section class="overview" aria-label="Budget overview">
+      <article class="overview-card">
+        <h2>This week</h2>
+        <p class="overview-amount">
+          <span id="weekSpent">$0</span>
+          <span class="of-budget">of <span id="weekBudget">$0</span></span>
+        </p>
+        <div class="progress"><div class="progress-fill" id="weekProgress"></div></div>
+        <p class="overview-note" id="weekNote">—</p>
+      </article>
+
+      <article class="overview-card">
+        <h2>This month</h2>
+        <p class="overview-amount">
+          <span id="monthSpent">$0</span>
+          <span class="of-budget">of <span id="monthBudget">$0</span></span>
+        </p>
+        <div class="progress"><div class="progress-fill" id="monthProgress"></div></div>
+        <p class="overview-note" id="monthNote">—</p>
+      </article>
+
+      <article class="overview-card">
+        <h2>This year</h2>
+        <p class="overview-amount">
+          <span id="yearSpent">$0</span>
+          <span class="of-budget">of <span id="yearBudget">$0</span></span>
+        </p>
+        <div class="progress"><div class="progress-fill" id="yearProgress"></div></div>
+        <p class="overview-note" id="yearNote">—</p>
+      </article>
+    </section>
+
+    <section class="panel" aria-label="Insights">
+      <h2 class="section-title">Insights</h2>
+      <ul class="insight-list" id="insightList"></ul>
+    </section>
+
+    <section class="panel-grid">
+      <article class="panel">
+        <h2 class="section-title">Weekly rhythm</h2>
+        <p class="section-note">Your spending over recent weeks, against your weekly budget line.</p>
+        <div class="chart-wrap" id="trendWrap"><canvas id="trendChart"></canvas></div>
+      </article>
+      <article class="panel">
+        <h2 class="section-title">Budget shape</h2>
+        <p class="section-note">How your weekly budget is allocated.</p>
+        <div class="chart-wrap small"><canvas id="budgetChart"></canvas></div>
+      </article>
+    </section>
+
+    <section class="panel-grid">
+      <article class="panel">
+        <h2 class="section-title">Budget vs actual</h2>
+        <p class="section-note">Year-to-date spending by category against the annual allowance.</p>
+        <div class="chart-wrap" id="categoryChartWrap"><canvas id="categoryChart"></canvas></div>
+      </article>
+      <article class="panel">
+        <h2 class="section-title">Categories</h2>
+        <p class="section-note">Ranked by share of annual budget used so far.</p>
+        <div class="category-list" id="categoryList"></div>
+      </article>
+    </section>
+
+    <footer class="site-footer">
+      <p>
+        Reads directly from <strong>sample-budget.xlsx</strong> in this folder using
+        <a href="https://sheetjs.com/" target="_blank" rel="noopener">SheetJS</a>.
+        Use “Open your workbook” to preview any Excel file privately in your browser — nothing is ever uploaded.
+        See the <a href="./README.md">README</a> for the expected spreadsheet layout and a note on deploying this publicly with real data.
+      </p>
+    </footer>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
