@@ -1,0 +1,9 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Your own private budget file — keep your real financial data out of
+# version control. Point the app at it locally; never commit it.
+*.local.xlsx
+budget.xlsx
+my-budget.xlsx
