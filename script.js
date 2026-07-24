@@ -463,10 +463,6 @@ document.getElementById("fileInput").addEventListener("change", async (event) =>
   }
 });
 
-document.getElementById("downloadBtn").addEventListener("click", () => {
-  window.location.href = WORKBOOK_PATH;
-});
-
 document.getElementById("templateBtn").addEventListener("click", () => {
   window.location.href = TEMPLATE_PATH;
 });
