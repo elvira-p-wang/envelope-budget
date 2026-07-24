@@ -22,8 +22,7 @@ It's three files (`index.html`, `styles.css`, `script.js`) and one spreadsheet. 
 - **Auto-generated insights** — under/over budget this week and month, a pace projection for the year, and your highest-usage category
 - **Weekly rhythm** line chart of recent weeks against your weekly budget
 - **Budget shape** donut chart showing how your weekly budget is allocated
-- **Budget vs actual** bar chart comparing year-to-date spend with each category's annual allowance
-- **Category breakdown** ranked by how much of its annual budget each category has used
+- **Budget vs actual** bar chart and ranked category list, both switchable between Week / Month / Year with a single toggle
 - Fully responsive, from phone to desktop
 - Reads any workbook that matches the schema below — your categories, your numbers
 
