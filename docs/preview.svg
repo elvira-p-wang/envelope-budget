@@ -1,0 +1,74 @@
+<svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, 'Times New Roman', serif">
+  <rect width="900" height="540" fill="#f7f4ee" rx="14"/>
+
+  <!-- browser chrome -->
+  <rect x="0" y="0" width="900" height="34" fill="#efe9dd" rx="14"/>
+  <rect x="0" y="20" width="900" height="14" fill="#efe9dd"/>
+  <circle cx="22" cy="17" r="5" fill="#e2b3a8"/>
+  <circle cx="40" cy="17" r="5" fill="#e6d2a0"/>
+  <circle cx="58" cy="17" r="5" fill="#a9c9b3"/>
+
+  <!-- header -->
+  <text x="40" y="78" font-size="15" letter-spacing="2" fill="#837b73" font-family="Helvetica, Arial, sans-serif">ENVELOPE &#183; DEMO</text>
+  <text x="40" y="112" font-size="38" fill="#262220">Envelope</text>
+  <text x="40" y="136" font-size="14" fill="#837b73" font-family="Helvetica, Arial, sans-serif">A calm, clear view of where your money goes.</text>
+
+  <!-- overview cards -->
+  <g font-family="Helvetica, Arial, sans-serif">
+    <!-- card 1 -->
+    <rect x="40" y="160" width="260" height="112" rx="12" fill="#fffefb" stroke="#e6ded2"/>
+    <text x="60" y="188" font-size="11" letter-spacing="1" fill="#837b73">THIS WEEK</text>
+    <text x="60" y="216" font-size="24" fill="#262220" font-family="Georgia, serif">$838 <tspan font-size="12" fill="#837b73" font-family="Helvetica, Arial, sans-serif">of $805</tspan></text>
+    <rect x="60" y="230" width="220" height="5" rx="2.5" fill="#efe9dd"/>
+    <rect x="60" y="230" width="180" height="5" rx="2.5" fill="#af7c3f"/>
+    <text x="60" y="254" font-size="11" fill="#af7c3f">Slightly over this week</text>
+
+    <!-- card 2 -->
+    <rect x="320" y="160" width="260" height="112" rx="12" fill="#fffefb" stroke="#e6ded2"/>
+    <text x="340" y="188" font-size="11" letter-spacing="1" fill="#837b73">THIS MONTH</text>
+    <text x="340" y="216" font-size="24" fill="#262220" font-family="Georgia, serif">$2,962 <tspan font-size="12" fill="#837b73" font-family="Helvetica, Arial, sans-serif">of $3,486</tspan></text>
+    <rect x="340" y="230" width="220" height="5" rx="2.5" fill="#efe9dd"/>
+    <rect x="340" y="230" width="150" height="5" rx="2.5" fill="#55806b"/>
+    <text x="340" y="254" font-size="11" fill="#55806b">On track this month</text>
+
+    <!-- card 3 -->
+    <rect x="600" y="160" width="260" height="112" rx="12" fill="#fffefb" stroke="#e6ded2"/>
+    <text x="620" y="188" font-size="11" letter-spacing="1" fill="#837b73">THIS YEAR</text>
+    <text x="620" y="216" font-size="24" fill="#262220" font-family="Georgia, serif">$9,092 <tspan font-size="12" fill="#837b73" font-family="Helvetica, Arial, sans-serif">of $41,860</tspan></text>
+    <rect x="620" y="230" width="220" height="5" rx="2.5" fill="#efe9dd"/>
+    <rect x="620" y="230" width="45" height="5" rx="2.5" fill="#55806b"/>
+    <text x="620" y="254" font-size="11" fill="#55806b">12 weeks logged this year</text>
+  </g>
+
+  <!-- insights panel -->
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="40" y="292" width="820" height="80" rx="12" fill="#fffefb" stroke="#e6ded2"/>
+    <text x="60" y="316" font-size="15" fill="#262220" font-family="Georgia, serif">Insights</text>
+    <circle cx="65" cy="335" r="2.5" fill="#8a6a52"/>
+    <text x="76" y="339" font-size="12" fill="#43403c">You're $34 over budget this week.</text>
+    <circle cx="65" cy="352" r="2.5" fill="#8a6a52"/>
+    <text x="76" y="356" font-size="12" fill="#43403c">Utilities is your highest-usage category so far, at 23% of its yearly budget.</text>
+  </g>
+
+  <!-- charts row -->
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="40" y="392" width="400" height="132" rx="12" fill="#fffefb" stroke="#e6ded2"/>
+    <text x="60" y="416" font-size="14" fill="#262220" font-family="Georgia, serif">Weekly rhythm</text>
+    <polyline points="70,500 110,480 150,492 190,466 230,486 270,458 310,472 350,450 390,470" fill="none" stroke="#8a6a52" stroke-width="2.5"/>
+    <line x1="70" y1="478" x2="410" y2="478" stroke="#837b73" stroke-width="1" stroke-dasharray="4 4"/>
+
+    <rect x="460" y="392" width="400" height="132" rx="12" fill="#fffefb" stroke="#e6ded2"/>
+    <text x="480" y="416" font-size="14" fill="#262220" font-family="Georgia, serif">Budget shape</text>
+    <circle cx="565" cy="465" r="38" fill="none" stroke="#efe9dd" stroke-width="16"/>
+    <circle cx="565" cy="465" r="38" fill="none" stroke="#8a6a52" stroke-width="16" stroke-dasharray="65 179" />
+    <circle cx="565" cy="465" r="38" fill="none" stroke="#7f9b6b" stroke-width="16" stroke-dasharray="30 179" stroke-dashoffset="-65"/>
+    <circle cx="565" cy="465" r="38" fill="none" stroke="#c98f6b" stroke-width="16" stroke-dasharray="24 179" stroke-dashoffset="-95"/>
+    <circle cx="565" cy="465" r="38" fill="none" stroke="#6b8fa3" stroke-width="16" stroke-dasharray="60 179" stroke-dashoffset="-119"/>
+    <g font-size="10.5" fill="#837b73">
+      <circle cx="650" cy="446" r="4" fill="#8a6a52"/><text x="660" y="450">Housing</text>
+      <circle cx="650" cy="464" r="4" fill="#7f9b6b"/><text x="660" y="468">Groceries</text>
+      <circle cx="650" cy="482" r="4" fill="#c98f6b"/><text x="660" y="486">Dining Out</text>
+      <circle cx="650" cy="500" r="4" fill="#6b8fa3"/><text x="660" y="504">Other</text>
+    </g>
+  </g>
+</svg>
