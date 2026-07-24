@@ -2,8 +2,14 @@
 .DS_Store
 Thumbs.db
 
+# Editors
+.vscode/
+.idea/
+*.swp
+
 # Your own private budget file — keep your real financial data out of
-# version control. Point the app at it locally; never commit it.
+# version control. Point the app at it locally via "Open your workbook",
+# or name your local copy to match one of these ignored patterns.
 *.local.xlsx
 budget.xlsx
 my-budget.xlsx
