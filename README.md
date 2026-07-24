@@ -5,10 +5,13 @@ A calm, spreadsheet-powered budget dashboard that runs entirely in your browser.
 [![License: MIT](https://img.shields.io/badge/license-MIT-8a6a52.svg)](LICENSE)
 ![No backend](https://img.shields.io/badge/backend-none-55806b.svg)
 ![Zero build step](https://img.shields.io/badge/build%20step-none-6b8fa3.svg)
+[![Live demo](https://img.shields.io/badge/demo-live-9b5f44.svg)](https://elvira-p-wang.github.io/envelope-budget/)
+
+**[Try the live demo →](https://elvira-p-wang.github.io/envelope-budget/)** — runs on the fictional `sample-budget.xlsx` data, nothing real to worry about. Open your own workbook or download a blank template right from the page.
 
 ![Envelope preview](docs/preview.svg)
 
-*(The image above is an illustration of the layout, not a screenshot — open `index.html` to see the real thing.)*
+*(The image above is an illustration of the layout, not a screenshot — see the [live demo](https://elvira-p-wang.github.io/envelope-budget/) for the real thing.)*
 
 ## Why Envelope
 
@@ -32,7 +35,7 @@ It's three files (`index.html`, `styles.css`, `script.js`) and one spreadsheet. 
 Browsers block a page from `fetch`-ing a local file directly, so run a tiny local server rather than double-clicking `index.html`:
 
 ```bash
-git clone https://github.com/<your-username>/envelope-budget.git
+git clone https://github.com/elvira-p-wang/envelope-budget.git
 cd envelope-budget
 python3 -m http.server 8000
 ```
