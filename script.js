@@ -44,7 +44,7 @@ const cleanCategory = (value) => String(value ?? "")
   .trim();
 
 let charts = {};
-let currentPeriod = "year"; // "week" | "month" | "year" — drives the category chart + list
+let currentPeriod = "month"; // "week" | "month" | "year" — drives the category chart + list
 let lastSummary = null;
 
 // ---------- Parsing ----------
