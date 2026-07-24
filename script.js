@@ -1,6 +1,6 @@
 /* Envelope — reads Budget and Weekly Log sheets from a linked workbook via SheetJS,
    entirely in the browser, and renders overview cards, insights, charts and a
-   category breakdown. No data ever leaves the page. */
+   category breakdown. Workbook data is processed locally and is never uploaded. */
 
 const WORKBOOK_PATH = "./sample-budget.xlsx";
 const TEMPLATE_PATH = "./blank-template.xlsx";

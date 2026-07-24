@@ -12,7 +12,7 @@ A calm, spreadsheet-powered budget dashboard that runs entirely in your browser.
 
 ## Why Envelope
 
-Most budgeting apps want an account, a bank connection, and a subscription. Envelope wants none of that. You keep your budget in a plain Excel workbook — the format you already know — and this page reads it, entirely on your device, and turns it into something calmer and easier to scan than a spreadsheet. Nothing is uploaded, tracked, or stored anywhere but your own browser session.
+Most budgeting apps want an account, a bank connection, and a subscription. Envelope wants none of that. You keep your budget in a plain Excel workbook — the format you already know — and this page reads it, entirely on your device, and turns it into something calmer and easier to scan than a spreadsheet. Your workbook data is processed locally in your browser and is never uploaded, tracked, or stored by Envelope. (The page itself does load a couple of fonts and libraries from public CDNs, same as most static sites — but your budget data never leaves your device.)
 
 It's three files (`index.html`, `styles.css`, `script.js`) and one spreadsheet. No accounts, no build step, no server.
 
@@ -41,10 +41,10 @@ Then open `http://localhost:8000`. You'll see the dashboard populated with the f
 
 To use your own numbers, either:
 - replace `sample-budget.xlsx` with your own file (same name), or
-- click **Open your workbook** and pick a file — it's read locally in your browser and never saved or uploaded, or
+- click **Open your workbook** and pick a file — it's processed locally in your browser and never uploaded by Envelope, or
 - click **Download blank template** for a copy of `blank-template.xlsx` — same sheets, same categories, all numbers zeroed and no weeks logged — fill it in and open it with **Open your workbook**.
 
-Either way, nothing is ever actually *uploaded* anywhere — "Open your workbook" just points the browser's file reader at a local file. Envelope re-reads whatever you hand it each time; it doesn't keep a live link to the file on disk, so if you edit the spreadsheet afterward you'll need to pick it again to refresh the page (see note below).
+Either way, your workbook itself is never uploaded anywhere — "Open your workbook" just points the browser's file reader at a local file. Envelope re-reads whatever you hand it each time; it doesn't keep a live link to the file on disk, so if you edit the spreadsheet afterward you'll need to pick it again to refresh the page (see note below).
 
 ## Workbook schema
 
