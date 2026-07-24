@@ -25,6 +25,7 @@ It's three files (`index.html`, `styles.css`, `script.js`) and one spreadsheet. 
 - **Budget vs actual** bar chart and ranked category list, both switchable between Week / Month / Year with a single toggle
 - Fully responsive, from phone to desktop
 - Reads any workbook that matches the schema below — your categories, your numbers
+- **Blank template download** — a zeroed-out copy of the workbook to fill in, so you never have to touch the sample data to get your own version
 
 ## Quick start
 
@@ -40,7 +41,10 @@ Then open `http://localhost:8000`. You'll see the dashboard populated with the f
 
 To use your own numbers, either:
 - replace `sample-budget.xlsx` with your own file (same name), or
-- click **Open your workbook** and pick a file — it's read locally in your browser and never saved or uploaded.
+- click **Open your workbook** and pick a file — it's read locally in your browser and never saved or uploaded, or
+- click **Download blank template** for a copy of `blank-template.xlsx` — same sheets, same categories, all numbers zeroed and no weeks logged — fill it in and open it with **Open your workbook**.
+
+Either way, nothing is ever actually *uploaded* anywhere — "Open your workbook" just points the browser's file reader at a local file. Envelope re-reads whatever you hand it each time; it doesn't keep a live link to the file on disk, so if you edit the spreadsheet afterward you'll need to pick it again to refresh the page (see note below).
 
 ## Workbook schema
 
@@ -65,6 +69,16 @@ Envelope expects two sheets. Category names can include emoji (`🏠 Housing`) �
 Add as many category columns as you like — the site only looks at columns whose header matches a category on the `Budget` sheet, plus a `Weekly Total` column (or it sums the category columns itself if that's missing).
 
 A blank cell or `0` in every category column for a week means that week hasn't been logged yet, so it's excluded from the "weeks logged" count and the charts.
+
+**How much can your workbook differ from the template?** The sheets must be named exactly `Budget` and `Weekly Log` — those two lookups are hardcoded in `parseWorkbook()`. Within that, Envelope is forgiving:
+- Renaming, adding, or removing categories works — the `Weekly Log` header row is matched to `Budget` category names at load time, not hardcoded.
+- Emoji, extra spacing, and capitalization in category names are normalized away before matching.
+- A missing `Weekly Total` column is fine (it gets summed from the category columns instead).
+- An unrecognized category still gets a color from the fallback palette, so it won't look broken.
+
+What it won't tolerate: different sheet names, or a `Budget` sheet whose first four columns aren't Category / Weekly / Monthly / Yearly in that order (those are read positionally, not by header). If either sheet is missing, Envelope shows a clear error rather than guessing.
+
+**No live refresh.** "Open your workbook" reads the file once, at the moment you pick it — there's no ongoing link to the file on disk. Edit the spreadsheet again and you'll need to click **Open your workbook** and re-select it to see the update; the browser's file-picker API doesn't hand out a live handle you can silently re-read. (A browser-only workaround exists — the File System Access API lets a page keep a reusable handle to a chosen file, Chrome/Edge only, not Safari/Firefox — but Envelope doesn't use it today.)
 
 ## Deploying with real data — please read this
 
