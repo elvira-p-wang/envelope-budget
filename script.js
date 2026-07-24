@@ -44,6 +44,8 @@ const cleanCategory = (value) => String(value ?? "")
   .trim();
 
 let charts = {};
+let currentPeriod = "year"; // "week" | "month" | "year" — drives the category chart + list
+let lastSummary = null;
 
 // ---------- Parsing ----------
 
@@ -111,8 +113,16 @@ function summarise(data) {
   const yearSpent = data.weeks.reduce((sum, w) => sum + w.total, 0);
 
   const categoryTotals = data.budget.map((item) => {
-    const actual = data.weeks.reduce((sum, w) => sum + (w.categories[item.category] || 0), 0);
-    return { ...item, actual, used: item.yearly ? actual / item.yearly : 0 };
+    const weekActual = latestWeek?.categories[item.category] || 0;
+    const monthActual = recentWeeks.reduce((sum, w) => sum + (w.categories[item.category] || 0), 0);
+    const yearActual = data.weeks.reduce((sum, w) => sum + (w.categories[item.category] || 0), 0);
+    return {
+      category: item.category,
+      weekBudget: item.weekly, monthBudget: item.monthly, yearBudget: item.yearly,
+      weekActual, monthActual, yearActual,
+      // kept for the "top category" insight, which is always a year-to-date read
+      actual: yearActual, used: item.yearly ? yearActual / item.yearly : 0,
+    };
   }).sort((a, b) => b.used - a.used);
 
   return {
@@ -211,12 +221,29 @@ function renderInsights(insights) {
   list.innerHTML = insights.map((i) => `<li class="${i.tone}">${i.text}</li>`).join("");
 }
 
-// ---------- Rendering: charts ----------
+// ---------- Category period view (week / month / year) ----------
 
-function destroyCharts() {
-  Object.values(charts).forEach((chart) => chart && chart.destroy());
-  charts = {};
+const PERIOD_META = {
+  week: { budgetKey: "weekBudget", actualKey: "weekActual", budgetLabel: "Weekly budget", note: "This week's spending by category against the weekly allowance." },
+  month: { budgetKey: "monthBudget", actualKey: "monthActual", budgetLabel: "Monthly budget", note: "Spending over your last logged weeks by category against the monthly allowance." },
+  year: { budgetKey: "yearBudget", actualKey: "yearActual", budgetLabel: "Annual budget", note: "Year-to-date spending by category against the annual allowance." },
+};
+
+function getCategoryView(s, period) {
+  const meta = PERIOD_META[period] || PERIOD_META.year;
+  return s.categoryTotals.map((c) => {
+    const actual = c[meta.actualKey];
+    const budget = c[meta.budgetKey];
+    return { category: c.category, actual, budget, used: budget ? actual / budget : 0 };
+  }).sort((a, b) => b.used - a.used);
 }
+
+function updateCategoryNote(period) {
+  const note = document.getElementById("categoryNote");
+  if (note) note.textContent = (PERIOD_META[period] || PERIOD_META.year).note;
+}
+
+// ---------- Rendering: charts ----------
 
 function baseLegend() {
   return { position: "bottom", labels: { boxWidth: 8, usePointStyle: true, padding: 14, font: { size: 11.5 }, color: cssVar("--muted") } };
@@ -295,11 +322,14 @@ function renderBudgetShapeChart(data) {
   });
 }
 
-function renderCategoryBarChart(s) {
+function renderCategoryBarChart(s, period) {
+  if (charts.category) { charts.category.destroy(); charts.category = null; }
   const ctx = document.getElementById("categoryChart");
-  const labels = s.categoryTotals.map((c) => c.category);
-  const actual = s.categoryTotals.map((c) => c.actual);
-  const yearly = s.categoryTotals.map((c) => c.yearly);
+  const view = getCategoryView(s, period);
+  const meta = PERIOD_META[period] || PERIOD_META.year;
+  const labels = view.map((c) => c.category);
+  const actual = view.map((c) => c.actual);
+  const budget = view.map((c) => c.budget);
   const muted = cssVar("--muted");
   const lineSoft = cssVar("--line-soft");
 
@@ -309,7 +339,7 @@ function renderCategoryBarChart(s) {
       labels,
       datasets: [
         { label: "Actual", data: actual, backgroundColor: labels.map((l, i) => colorFor(l, i)), borderRadius: 4, barPercentage: 0.6 },
-        { label: "Annual budget", data: yearly, backgroundColor: lineSoft, borderRadius: 4, barPercentage: 0.6 },
+        { label: meta.budgetLabel, data: budget, backgroundColor: lineSoft, borderRadius: 4, barPercentage: 0.6 },
       ],
     },
     options: {
@@ -326,11 +356,12 @@ function renderCategoryBarChart(s) {
   });
 }
 
-function renderCharts(s, data) {
-  destroyCharts();
+function renderCharts(s, data, period) {
+  if (charts.trend) { charts.trend.destroy(); charts.trend = null; }
+  if (charts.budget) { charts.budget.destroy(); charts.budget = null; }
   renderTrendChart(s);
   renderBudgetShapeChart(data);
-  renderCategoryBarChart(s);
+  renderCategoryBarChart(s, period);
 }
 
 // ---------- Rendering: category list ----------
@@ -341,30 +372,52 @@ function statusClass(ratio) {
   return "good";
 }
 
-function renderCategories(s) {
+function renderCategories(s, period) {
   const list = document.getElementById("categoryList");
-  list.innerHTML = s.categoryTotals.map((c, i) => {
+  const view = getCategoryView(s, period);
+  list.innerHTML = view.map((c, i) => {
     const pct = Math.min(100, c.used * 100);
     const cls = statusClass(c.used);
     return `
       <div class="category-row">
         <div class="category-row-top">
           <span class="category-name"><span class="category-dot" style="background:${colorFor(c.category, i)}"></span>${c.category}</span>
-          <span class="category-amounts">${money(c.actual)} of ${money(c.yearly)}</span>
+          <span class="category-amounts">${money(c.actual)} of ${money(c.budget)}</span>
         </div>
         <div class="progress small"><div class="progress-fill ${cls === "good" ? "" : cls}" style="width:${pct}%"></div></div>
       </div>`;
   }).join("");
 }
 
+// ---------- Period toggle ----------
+
+function setPeriod(period) {
+  currentPeriod = period;
+  document.querySelectorAll(".period-btn").forEach((btn) => {
+    const active = btn.dataset.period === period;
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-selected", String(active));
+  });
+  updateCategoryNote(period);
+  if (!lastSummary) return;
+  renderCategoryBarChart(lastSummary, period);
+  renderCategories(lastSummary, period);
+}
+
+document.querySelectorAll(".period-btn").forEach((btn) => {
+  btn.addEventListener("click", () => setPeriod(btn.dataset.period));
+});
+
 // ---------- Top-level render ----------
 
 function render(data) {
   const s = summarise(data);
+  lastSummary = s;
   renderOverview(s);
   renderInsights(buildInsights(s));
-  renderCharts(s, data);
-  renderCategories(s);
+  renderCharts(s, data, currentPeriod);
+  renderCategories(s, currentPeriod);
+  updateCategoryNote(currentPeriod);
 }
 
 function setStatus(text, tone) {

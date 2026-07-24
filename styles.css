@@ -280,6 +280,49 @@ h1 {
 
 .panel-grid .panel { margin-bottom: 0; min-width: 0; }
 
+.section-block { margin-bottom: 16px; }
+
+.section-block-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.section-block .section-note { margin-bottom: 0; }
+
+.period-toggle {
+  display: inline-flex;
+  background: var(--line-soft);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.period-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+
+.period-btn:hover:not(.active) { color: var(--ink); }
+
+.period-btn.active {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(38, 34, 32, .07);
+}
+
 .chart-wrap {
   position: relative;
   height: 240px;

@@ -88,17 +88,26 @@
       </article>
     </section>
 
-    <section class="panel-grid">
-      <article class="panel">
-        <h2 class="section-title">Budget vs actual</h2>
-        <p class="section-note">Year-to-date spending by category against the annual allowance.</p>
-        <div class="chart-wrap" id="categoryChartWrap"><canvas id="categoryChart"></canvas></div>
-      </article>
-      <article class="panel">
-        <h2 class="section-title">Categories</h2>
-        <p class="section-note">Ranked by share of annual budget used so far.</p>
-        <div class="category-list" id="categoryList"></div>
-      </article>
+    <section class="section-block" aria-label="Category breakdown">
+      <div class="section-block-header">
+        <div>
+          <h2 class="section-title">Budget vs actual</h2>
+          <p class="section-note" id="categoryNote">Year-to-date spending by category against the annual allowance.</p>
+        </div>
+        <div class="period-toggle" role="tablist" aria-label="Time period">
+          <button class="period-btn" type="button" data-period="week" role="tab" aria-selected="false">Week</button>
+          <button class="period-btn" type="button" data-period="month" role="tab" aria-selected="false">Month</button>
+          <button class="period-btn active" type="button" data-period="year" role="tab" aria-selected="true">Year</button>
+        </div>
+      </div>
+      <div class="panel-grid">
+        <article class="panel">
+          <div class="chart-wrap" id="categoryChartWrap"><canvas id="categoryChart"></canvas></div>
+        </article>
+        <article class="panel">
+          <div class="category-list" id="categoryList"></div>
+        </article>
+      </div>
     </section>
 
     <footer class="site-footer">
