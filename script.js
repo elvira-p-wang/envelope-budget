@@ -333,6 +333,11 @@ function renderCategoryBarChart(s, period) {
   const muted = cssVar("--muted");
   const lineSoft = cssVar("--line-soft");
 
+  // Give every category row enough height that Chart.js never has to
+  // auto-skip a label — otherwise it silently hides labels that don't fit.
+  const wrap = document.getElementById("categoryChartWrap");
+  wrap.style.height = Math.max(240, labels.length * 30 + 20) + "px";
+
   charts.category = new Chart(ctx, {
     type: "bar",
     data: {
@@ -350,7 +355,7 @@ function renderCategoryBarChart(s, period) {
       },
       scales: {
         x: { beginAtZero: true, grid: { color: lineSoft }, ticks: { font: { size: 11 }, color: muted, callback: (v) => "$" + v } },
-        y: { grid: { display: false }, ticks: { font: { size: 11.5 }, color: cssVar("--ink") } },
+        y: { grid: { display: false }, ticks: { font: { size: 11.5 }, color: cssVar("--ink"), autoSkip: false } },
       },
     },
   });
