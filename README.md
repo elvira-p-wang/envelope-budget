@@ -73,6 +73,10 @@ Add as many category columns as you like — the site only looks at columns whos
 
 A blank cell or `0` in every category column for a week means that week hasn't been logged yet, so it's excluded from the "weeks logged" count and the charts.
 
+`blank-template.xlsx` ships with 260 pre-built week rows (5 years) instead of 52, each with its `Weekly Total` formula already in place, so you won't hit a wall for a long time. If you ever do run out, select the last row and drag its fill handle (the small square at the bottom-right of the selection) down as far as you like — every app (Excel, Google Sheets, Numbers, LibreOffice) copies the week label and the `Weekly Total` formula down automatically. A note to that effect is included right below the last row in the sheet itself.
+
+**"This year" is a rolling window, not a calendar year.** There are no real dates in the workbook, just week labels (`W1`, `W2`, …), so Envelope can't know when a calendar year actually starts. "This month" is your last 4 logged weeks and "this year" is your last 52 logged weeks — both rolling windows anchored to whatever week you logged most recently, not fixed calendar boundaries. This matters once a workbook holds more than a year of history: the "year" card and the pace-projection insight only look at the most recent 52 weeks, not everything you've ever logged.
+
 **How much can your workbook differ from the template?** The sheets must be named exactly `Budget` and `Weekly Log` — those two lookups are hardcoded in `parseWorkbook()`. Within that, Envelope is forgiving:
 - Renaming, adding, or removing categories works — the `Weekly Log` header row is matched to `Budget` category names at load time, not hardcoded.
 - Emoji, extra spacing, and capitalization in category names are normalized away before matching.

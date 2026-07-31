@@ -111,12 +111,17 @@ function summarise(data) {
   const recentWeeks = data.weeks.slice(-4);
   const monthSpent = recentWeeks.reduce((sum, w) => sum + w.total, 0);
 
-  const yearSpent = data.weeks.reduce((sum, w) => sum + w.total, 0);
+  // "Year" is a rolling window of the most recent 52 logged weeks, not the
+  // whole workbook — same rolling-window approach as "month" above. Without
+  // this, a workbook with multiple years of history would lump everything
+  // ever logged into "this year".
+  const recentYearWeeks = data.weeks.slice(-52);
+  const yearSpent = recentYearWeeks.reduce((sum, w) => sum + w.total, 0);
 
   const categoryTotals = data.budget.map((item) => {
     const weekActual = latestWeek?.categories[item.category] || 0;
     const monthActual = recentWeeks.reduce((sum, w) => sum + (w.categories[item.category] || 0), 0);
-    const yearActual = data.weeks.reduce((sum, w) => sum + (w.categories[item.category] || 0), 0);
+    const yearActual = recentYearWeeks.reduce((sum, w) => sum + (w.categories[item.category] || 0), 0);
     return {
       category: item.category,
       weekBudget: item.weekly, monthBudget: item.monthly, yearBudget: item.yearly,
@@ -129,8 +134,9 @@ function summarise(data) {
   return {
     weekBudget, monthBudget, yearBudget,
     weekSpent, monthSpent, yearSpent,
-    latestWeek, recentWeeks, categoryTotals,
+    latestWeek, recentWeeks, recentYearWeeks, categoryTotals,
     weeksLogged: data.weeks.length,
+    yearWeeksLogged: recentYearWeeks.length,
     allWeeks: data.weeks,
   };
 }
@@ -155,7 +161,7 @@ function buildInsights(s) {
     ? { text: `You're <span class="amount">${money(monthDiff)}</span> under budget over ${monthLabel}.`, tone: "positive" }
     : { text: `You're <span class="amount">${money(-monthDiff)}</span> over budget over ${monthLabel}.`, tone: "negative" });
 
-  const avgWeekly = s.yearSpent / s.weeksLogged;
+  const avgWeekly = s.yearSpent / s.yearWeeksLogged;
   const projectedAnnual = avgWeekly * 52;
   const paceDiff = s.yearBudget - projectedAnnual;
   insights.push(paceDiff >= 0
@@ -201,8 +207,8 @@ function renderOverview(s) {
   monthNote.className = "overview-note " + noteClass(monthRatio, s.weeksLogged);
 
   const yearNote = document.getElementById("yearNote");
-  yearNote.textContent = `${s.weeksLogged} week${s.weeksLogged === 1 ? "" : "s"} logged this year`;
-  yearNote.className = "overview-note " + noteClass(yearRatio, s.weeksLogged);
+  yearNote.textContent = `${s.yearWeeksLogged} week${s.yearWeeksLogged === 1 ? "" : "s"} logged this year`;
+  yearNote.className = "overview-note " + noteClass(yearRatio, s.yearWeeksLogged);
 }
 
 function noteClass(ratio, weeksLogged) {
