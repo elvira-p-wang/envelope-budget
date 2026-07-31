@@ -393,6 +393,10 @@ h1 {
   line-height: 1.7;
 }
 
+.site-footer p + p {
+  margin-top: 8px;
+}
+
 /* Responsive */
 
 @media (max-width: 720px) {
